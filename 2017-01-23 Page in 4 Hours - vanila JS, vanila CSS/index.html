@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+    <title>Test, Olga Pigareva</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet">
+</head>
+<body>
+<div class="wraper">
+    <header>
+        <nav class="nav-flax-container">
+            <div class="nav-flex-box" id="logo">
+                <p>Logo</p>
+            </div>
+            <div class="nav-flex-box">
+                <p><a href="#"><img src="/icons/ico-menu.svg" onerror="this.onerror=null; this.src='image.png'"></a>
+                    Dashboard</p>
+            </div>
+            <div class="nav-flex-box">
+                <p><a href="#"><img src="/icons/ico-calc.svg" onerror="this.onerror=null; this.src='image.png'"></a>
+                    Rechner</p>
+            </div>
+        </nav>
+    </header>
+    <div class="inner-wraper">
+        <section>
+            <h2>Fahrzeug</h2>
+            <hr>
+            <div>
+                <button type="button" name="Kleinwagen" value="Kleinwagen" onclick="loadKleinwagen()">Kleinwagen</button>
+                <button type="button" name="Limousine" value="Limousine">Limousine</button>
+                <button type="button" name="Kombi" value="Kombi">Kombi</button>
+            </div>
+            <h2>Kraftstoffart</h2>
+            <hr>
+            <div>
+                <button type="button" name="Diesel" value="Diesel">Diesel</button>
+                <button type="button" name="Benzin" value="Benzin">Benzin</button>
+                <button type="button" name="Elektro" value="Elektro">Elektro</button>
+            </div>
+            <h2>Ausstatung</h2>
+            <hr>
+            <div>
+                <button type="button" name="Sitzheizung" value="Sitzheizung">Sitzheizung</button>
+                <button type="button" name="Regensensor" value="Regensensor">Regensensor</button>
+                <button type="button" name="Schiebedach" value="Schiebedach">Schiebedach</button>
+                <button type="button" name="Tempomat" value="Tempomat">Tempomat</button>
+                <button type="button" name="Standheizung" value="Standheizung">Standheizung</button>
+            </div>
+        </section>
+        <section>
+            <h2>Fahrzeugdetails</h2>
+            <hr>
+            <div id="accordion">
+                <h3><a href="#">Lorem Ipsum1</a></h3>
+                <p class="hidden ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse auctor nunc at
+                    ipsum fringilla dictum. Nulla gravida nibh eu justo tempor volutpat. Vivamus hendrerit ullamcorper
+                    velit, a semper orci ultricies sed. Nam vitae scelerisque eros, quis egestas nulla. Suspendisse nec
+                    nulla sed risus tristique egestas. Vestibulum ultricies ipsum vel congue blandit. Etiam vulputate
+                    imperdiet elementum. Fusce vitae varius nisi. Nunc erat nibh, scelerisque eu erat at, iaculis tempus
+                    lacus. Donec commodo, dui elementum ornare fringilla, eros enim mattis velit, et dictum ipsum dui
+                    sit amet orci. Nunc fermentum, neque bibendum efficitur euismod, nisi sapien vehicula nulla, a
+                    suscipit risus eros sit amet arcu. Nunc eu tellus velit.</p>
+                <hr>
+                <h3><a href="#">Lorem Ipsum2</a></h3>
+                <p class=" hidden">2Curabitur varius risus ac bibendum sollicitudin. Integer consectetur rutrum lorem, et
+                    viverra velit euismod ac. Etiam ac hendrerit nulla, at viverra nisi. Cras porta bibendum vehicula.
+                    Sed ullamcorper ut dui id luctus. Curabitur varius rutrum metus eget eleifend. Donec mi augue,
+                    dignissim ac venenatis a, accumsan at dolor. Ut libero arcu, sollicitudin eget imperdiet sed,
+                    vestibulum quis augue. Nunc id ipsum porttitor, molestie velit et, ullamcorper massa. Integer
+                    vulputate, eros eget posuere porta, nunc augue convallis libero, a tempus felis sapien quis mauris.
+                    Vestibulum accumsan posuere elit vitae tincidunt. Curabitur eget ligula fringilla, volutpat urna at,
+                    tristique mi. Maecenas sed justo libero. Cras varius, ex sit amet accumsan feugiat, nisl quam
+                    efficitur risus, ac rhoncus orci odio ut purus. Nam placerat sollicitudin metus, non egestas risus
+                    scelerisque a. Suspendisse posuere porttitor urna in condimentum.</p>
+                <hr>
+                <h3><a href="#">Lorem Ipsum3</a></h3>
+                <p class=" hidden">3Nunc consectetur, nulla imperdiet laoreet convallis, ipsum nulla tincidunt dolor,
+                    quis lobortis sem nulla eu nulla. Suspendisse potenti. Pellentesque blandit ligula ut lorem
+                    tristique tempor nec ut mi. Morbi malesuada a lacus sed finibus. Integer facilisis suscipit commodo.
+                    Etiam sollicitudin, augue id consectetur interdum, risus est dictum ex, in vestibulum velit nunc
+                    quis augue. Vivamus convallis consectetur lacus a feugiat. Donec ac purus nec dolor mattis feugiat
+                    et id lacus. Phasellus rhoncus pretium gravida. Ut elit ex, vulputate non ex eget, imperdiet
+                    accumsan ex</p>
+                <hr>
+                <h3><a href="#">Lorem Ipsum4</a></h3>
+                <p class=" hidden">4Donec sollicitudin magna id tortor vehicula, vitae auctor turpis ornare. Pellentesque
+                    ac lorem tempor, finibus libero non, porta quam. Morbi lobortis elit sit amet ante pharetra iaculis.
+                    Fusce commodo risus et sollicitudin sollicitudin. Duis viverra, ligula in fringilla tempus, diam
+                    libero ornare mi, vehicula euismod mauris lectus sed felis. Quisque tincidunt quam vitae sapien
+                    pellentesque, quis lacinia urna placerat. Morbi feugiat, neque et vestibulum tristique, sem arcu
+                    sagittis est, nec congue arcu arcu ac felis. Donec sit amet risus in nulla mattis hendrerit sit amet
+                    quis nunc. Sed sollicitudin, nibh et imperdiet faucibus, lorem diam blandit metus, tempor
+                    consectetur tortor arcu sed lorem. Fusce non dolor non velit posuere dapibus sed non nibh. Maecenas
+                    sit amet fringilla elit, id lacinia augue. Integer congue mauris nunc, et ultricies ligula porttitor
+                    et. Sed luctus est eget purus tincidunt, in scelerisque diam pellentesque. Aenean auctor commodo
+                    elit, et lacinia urna pretium fringilla.</p>
+                <hr>
+                <h3><a href="#">Lorem Ipsum5</a></h3>
+                <p class=" hidden">5Pellentesque sagittis aliquam nulla, vitae pharetra ligula auctor a. Cras elementum
+                    leo eget lacus ultrices, sed suscipit orci finibus. Cras ullamcorper maximus mauris sit amet
+                    blandit. Cras ut ullamcorper metus. Maecenas pulvinar sodales urna, a mattis velit molestie quis.
+                    Integer efficitur, elit sit amet placerat iaculis, risus mi laoreet ipsum, id porttitor tellus diam
+                    vel augue. Nunc eu commodo est. Mauris elementum ligula risus. Donec gravida purus pellentesque
+                    gravida semper. Sed mi magna, gravida ac posuere sed, viverra scelerisque sem. Integer sollicitudin
+                    eleifend odio, vitae aliquet dolor sollicitudin eget. Suspendisse tempor eu dolor vel cursus.
+                    Maecenas dignissim lacus ante, at suscipit dolor facilisis bibendum. Phasellus mi lectus, volutpat
+                    non nibh a, sagittis condimentum urna. Aliquam rhoncus sodales nibh, sit amet rutrum neque vehicula
+                    eget. Duis pretium, nisl et auctor suscipit, erat sapien blandit tellus, non rutrum nisl mauris vel
+                    eros.</p>
+                <hr>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        var a = document.querySelectorAll('#accordion a');
+        for (var i = 0; i < a.length; i++) {
+            a[i].onclick = function () {
+                var elements = document.querySelectorAll('#accordion p');
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].classList.add('hidden');
+                }
+                this.parentElement.nextElementSibling.classList.remove('hidden');
+                return false;
+            }
+        }
+        var buttons = document.querySelectorAll('button');
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].onclick = function () {
+                this.classList.toggle("green");
+                var xhr = new XMLHttpRequest();
+                var fileName = this.getAttribute('value').toLowerCase();
+                xhr.open('GET', '/json/' + fileName + '.json', true);
+                xhr.send();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState != 4) return;
+                    if (xhr.status != 200) {
+                        console.log('Error ' + xhr.status + ': ' + xhr.statusText);
+                    } else {
+                        alert(xhr.responseText);
+                    }
+                }
+            }
+        }
+
+
+    }
+</script>
+</body>
+</html>
