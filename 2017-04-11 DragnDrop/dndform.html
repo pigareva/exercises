@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <title>DragnDrop</title>
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script
+            src="http://code.jquery.com/jquery-3.2.0.min.js"
+            integrity="sha256-JAW99MJVpJBGcbzEuXk4Az05s/XyDdBomFqNlM3ic+I="
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Modernizr -->
+    <script src="/js/modernizr-2.6.2.min.js"></script>
+    <style type="text/css">
+
+        /*dnd style*/
+
+        .box {
+            max-width: 490px;
+        }
+
+        /*needed for input style*/
+        label>.box_file {
+            display: none
+        }
+
+        .box_input {
+            position: relative;
+            /*overflow: hidden;*/
+            text-align: center;
+        }
+
+        .box_input>label {
+            display: block;
+            /*position: absolute;*/
+            width: 90%;
+            /*height: 100%;*/
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .has-advanced-upload {
+            background-color: white;
+            outline: 2px dashed black;
+            outline-offset: -10px;
+            max-width: 490px;
+        }
+
+        .has-advanced-upload .box_dragndrop {
+            display: inline;
+        }
+
+        .is-dragover {
+            background-color: #ff342c!important;
+        }
+
+        .box.is-uploading .box_input {
+            visibility: hidden;
+        }
+        .box.is-uploading .box_uploading {
+            display: block;
+        }
+
+        .box_button {
+            display: none;
+        }
+
+        .box_error {
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+<!--dnd form-->
+<form class="box form-control" method="post" action="/upload.php"
+      enctype="multipart/form-data">
+    <div class="box_input">
+        <label for="file">
+            <input class="box_file" type="file" name="files[]" id="file"
+                   data-multiple-caption="{count} files selected" multiple/>
+            <strong>Choose a file</strong>
+            <span class="box_dragndrop"> or drag it here</span>
+
+        </label>
+
+        <button class="box_button" type="submit">Upload</button>
+    </div>
+
+</form>
+<div class="box_uploading hidden">Uploading&hellip;</div>
+<div class="box_success hidden">Done!</div>
+<div class="box_error hidden">Error! <span></span></div>
+<div class="box_filename hidden"></div>
+<script type="text/javascript">
+  $(function () {
+    // check if client browser supports dnd
+    var isAdvancedUpload = function () {
+      return ((Modernizr.draganddrop) && 'FormData' in window && window.FileReader)
+    }();
+
+    var $form = $('.box');
+    var $input = $('#file');
+
+
+    //user uses input
+    $input.on('change', function (e) {
+      var files = e.target.files;
+      displayFilesNames(files)
+      $form.trigger('submit')
+    });
+
+    //display filename onload
+    function displayFilesNames(files) {
+      var output = [];
+      for (var i = 0, f; f = files[i]; i++) {
+        output.push('<li><strong>', f.name, '</strong> (',
+          f.type || 'n/a', ') - ',
+          f.size, ' bytes, last modified: ',
+          f.lastModifiedDate.toLocaleDateString(), '</li>');
+      }
+      $('.box_filename').removeClass('hidden').html('<ul>' + output.join('') + '</ul>')
+    }
+
+//user uses dnd
+    if (isAdvancedUpload) {
+      $form.addClass('has-advanced-upload');
+      var droppedFiles = false;
+
+      $form.on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      })
+        .on('dragover dragenter', function () { //some style on move
+          $form.addClass('is-dragover');
+        })
+        .on('dragleave dragend drop', function () {
+          $form.removeClass('is-dragover');
+        })
+        .on('drop', function (e) {
+//return the list of files
+          droppedFiles = e.originalEvent.dataTransfer.files;
+          $('.box_filename').empty();
+          $('.box_error').addClass('hidden');
+          $('.box_success').addClass('hidden');
+//check file size
+          for (var i = 0; i < droppedFiles.length; i++) {
+            if (droppedFiles[i].size > 1048576) {// в байтах - это один М
+              console.log('too big')
+              $('.box_error span').text('Max file size is 1MB');
+              $('.box_error').removeClass('hidden'); //проверить класс
+              return false;
+            }
+          }
+//ajax request
+          var ajaxData = new FormData();
+
+//add all the dropped files to FormData object
+          if (droppedFiles) {
+            $.each(droppedFiles, function (i, file) {
+              ajaxData.append($input.attr('name'), file); // зависит, как серверный метод написан. сервер ожидает файлы в поле с этим названием
+            });
+          }
+
+          $.ajax({
+            url: $form.attr('action'),
+            type: $form.attr('method'),
+            data: ajaxData,
+            dataType: 'json', //прочитать про datatype
+            cache: false,
+            contentType: false,
+            processData: false,
+            complete: function () {
+              $form.removeClass('is-uploading');
+            },
+            success: function (data) {
+              $('.box_success').removeClass('hidden');
+              displayFilesNames(droppedFiles);
+              if (!data.success) $('.box_error span').text(data.error);
+            },
+            error: function () {
+              console.log("ajax error")
+              $('.box_error span').text(data.error)
+            }
+          });
+
+        });
+    } else {
+      var iframeName = 'uploadiframe' + new Date().getTime();
+      $iframe = $('<iframe name="' + iframeName + '" style="display: none;"></iframe>');
+      $('body').append($iframe);
+      $form.attr('target', iframeName);
+      $iframe.one('load', function () {
+        var data = JSON.parse($iframe.contents().find('body').text());
+        $form
+          .removeClass('is-uploading')
+
+          .removeAttr('target');
+        if (!data.success) {
+          $('.box_error span').text(data.error);
+          $('.box_error').removeClass('hidden')
+        } else $('.box_success').removeClass('hidden');
+        $form.removeAttr('target');
+        $iframe.remove();
+      })
+    }
+  })
+</script>
+</body>
+</html>
